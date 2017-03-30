@@ -49,8 +49,8 @@ static int stick_this_thread_to_core(int core_id)
 
 static void set_pthread_params()
 {
-	int policy = SCHED_RR;
-	int priority = sched_get_priority_max(SCHED_RR);
+	int policy = SCHED_FIFO;
+	int priority = sched_get_priority_max(SCHED_FIFO);
 
 	sched_param sch_params;
 	sch_params.sched_priority = priority;

@@ -19,7 +19,7 @@
 #include "gnuplot-iostream.h"
 #include "concurency_helpers.h"
 
-#define maximum_count 64
+#define maximum_count 512
 
 class smooth_cpp
 {
@@ -64,7 +64,7 @@ private:
 
 	bool mb = true;
 	Gnuplot gp;
-	std::deque<std::pair<double, double> > plot;
+	std::deque<double > plot;
 
 	smooth_cpp smooth;
 

@@ -33,17 +33,17 @@ Plot::Plot(char const * _name, double _scale_y_min, double _scale_y_max,
 				_scale_y_max)
 {
 
-	smooth.set_filter_value(0.5);
+	smooth.set_filter_value(0.);
 
 	for (size_t i = 0; i < maximum_count; i++)
 	{
-		plot.push_front(std::make_pair(1 - (i / maximum_count), 0));
+		plot.push_front(0);
 	}
 
 	if (metod == transfer::scroll)
 	{
 		// Don't forget to put "\n" at the end of each line!
-		gp << "set xrange [0:1]\n";
+		gp << "set xrange [0:512]\n";
 		//gp << "set yrange [0:1]\n";
 
 		gp << "set yrange [";
@@ -55,13 +55,13 @@ Plot::Plot(char const * _name, double _scale_y_min, double _scale_y_max,
 		gp << "]\n";
 
 		t =	new std::thread([&](){
-				stick_this_thread_to_core(1);
-				//set_pthread_params();
+				stick_this_thread_to_core(7);
+				set_pthread_params();
 				getinfo();
 				while(1)
 				{
 					proces();
-					std::this_thread::sleep_for( std::chrono::duration<double, std::milli>(50) );
+					std::this_thread::sleep_for( std::chrono::duration<double, std::milli>(20) );
 				}
 		});
 	}
@@ -114,14 +114,10 @@ bool Plot::proces()
 
 	if (plot.size() > maximum_count)
 	{
-		plot.pop_back();
-		for (size_t i = 0; i < plot.size(); i++)
-		{
-			plot.at(i).first -= 1.0 / maximum_count;
-		}
+		plot.pop_front();
 	}
 
-	plot.push_front(std::make_pair(1, value.load()));
+	plot.push_back( value.load() );
 
 	gp.send1d(plot);
 

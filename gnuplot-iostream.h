@@ -1928,6 +1928,16 @@ private:
 		}
 		else
 		{
+			std::ostringstream ekor;
+			ekor <<  "taskset ";
+
+			int lolo = 1 << 7;
+			ekor << lolo << " ";
+			cmd.insert(0, ekor.str());
+
+
+			//cmd.insert(0, "taskset 20 " );
+
 			FILE *fh = GNUPLOT_POPEN(cmd.c_str(), "w");
 			if (!fh)
 				throw(std::ios_base::failure("cannot open pipe " + cmd));
