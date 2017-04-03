@@ -123,6 +123,6 @@ bool Plot::proces()
 
 	gp.flush();
 
-	return mb < 0;
+	return true;
 }
 

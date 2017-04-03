@@ -62,7 +62,6 @@ private:
 	std::mutex m;
 	std::atomic<double> value;
 
-	bool mb = true;
 	Gnuplot gp;
 	std::deque<double > plot;
 
