@@ -1,16 +1,18 @@
 #!/bin/bash
-set -x
+set -e
+#set -x
 
-rm -rf libs/*
+mkdir -p ../libs
+rm -rf ../libs/*
 
 
-make -C Debug clean
-make -j -C Debug
+make  clean
+make -j 
 
-cp Debug/libPlot.a libs/libPlot.a
+cp libPlot.a ../libs/libPlot.a
 
 #TODO: replace absolute paths
-cd libs
+cd ../libs
 ar -x /usr/lib/x86_64-linux-gnu/libboost_filesystem.a
 ar -x /usr/lib/x86_64-linux-gnu/libboost_system.a
 ar -x /usr/lib/x86_64-linux-gnu/libboost_iostreams.a
@@ -18,4 +20,5 @@ ar -x libPlot.a
 ar -qc libGnuPlot.a *.o
 rm *.o
 rm libPlot.a
+echo "finish"
 cd ../
