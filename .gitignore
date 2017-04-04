@@ -1,3 +1,6 @@
-/Release/
 .settings/language.settings.xml
-/Debug/
+
+/**/*.o
+/**/*.d
+/**/*.a
+
